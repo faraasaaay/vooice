@@ -1,22 +1,10 @@
 // API Configuration
 const getAPIURL = () => {
-  // Check for environment variable first
-  const envURL = import.meta.env.VITE_VOICE_SERVER_API_URL;
-  if (envURL) {
-    return envURL;
-  }
-
-  // Fallback based on environment
-  const environment = import.meta.env.MODE || 'development';
-
-  if (environment === 'production') {
-    // Replace this with your actual Vercel deployment URL
-    // Example: 'https://your-voice-api.vercel.app'
-    return 'https://your-voice-api.vercel.app';
-  } else {
-    // For local development, use localhost
-    return 'http://localhost:3000';
-  }
+  // Hardcoded API URL - Update this with your deployed voice server API URL
+  return 'https://your-voice-server-api.vercel.app';
+  
+  // For local development, uncomment the line below and comment the line above
+  // return 'http://localhost:3000';
 };
 
 // Export the API URL

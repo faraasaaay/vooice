@@ -1,6 +1,6 @@
 # WebRTC Voice Server API
 
-This is the backend signaling server for the WebRTC voice calling application.
+This is the backend signaling server for the WebRTC voice calling application. This should be deployed separately from the frontend.
 
 ## Features
 
@@ -9,6 +9,21 @@ This is the backend signaling server for the WebRTC voice calling application.
 - CORS enabled for cross-origin requests
 - Health check endpoint
 - Vercel deployment ready
+
+## Quick Deploy to Vercel
+
+1. Navigate to this folder:
+```bash
+cd voice-server-api
+```
+
+2. Install Vercel CLI and deploy:
+```bash
+npm install -g vercel
+vercel
+```
+
+3. Copy the deployment URL and update it in the frontend's `src/config/api.js` file.
 
 ## Local Development
 

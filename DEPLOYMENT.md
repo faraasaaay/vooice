@@ -1,50 +1,40 @@
 # Deployment Guide
 
-This guide explains how to deploy the WebRTC Voice Calling application with separate frontend and backend hosting.
+This guide explains how to deploy the WebRTC Voice Calling application.
 
 ## Architecture Overview
 
-- **Frontend**: React application (this folder) - can be hosted on Vercel, Netlify, etc.
-- **Backend**: Voice Server API (`voice-server-api/` folder) - Socket.IO signaling server
+- **Frontend**: React application - can be hosted on Vercel, Netlify, etc.
+- **Backend**: Voice Server API (separate deployment) - Socket.IO signaling server
 
 ## Step 1: Deploy the Voice Server API
 
 ### Option A: Deploy to Vercel (Recommended)
 
-1. Navigate to the voice server API folder:
-```bash
-cd voice-server-api
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Install Vercel CLI (if not already installed):
+1. Install Vercel CLI (if not already installed):
 ```bash
 npm i -g vercel
 ```
 
-4. Deploy to Vercel:
+2. Navigate to the voice server API folder and deploy:
 ```bash
+cd voice-server-api
 vercel
 ```
 
-5. Follow the prompts:
+3. Follow the prompts:
    - Set up and deploy? **Y**
    - Which scope? Choose your account
    - Link to existing project? **N** (for first deployment)
-   - Project name: `webrtc-voice-server-api` (or your preferred name)
-   - In which directory is your code located? **./voice-server-api**
+   - Project name: `webrtc-voice-server-api`
 
-6. Note the deployment URL (e.g., `https://webrtc-voice-server-api.vercel.app`)
+4. Note the deployment URL (e.g., `https://webrtc-voice-server-api.vercel.app`)
 
 ### Option B: Deploy to Railway
 
 1. Go to [Railway.app](https://railway.app)
 2. Connect your GitHub repository
-3. Select the `voice-server-api` folder as the root
+3. Set the root directory to `voice-server-api`
 4. Railway will auto-detect the Node.js app and deploy it
 
 ### Option C: Deploy to Render
@@ -59,17 +49,12 @@ vercel
 
 ## Step 2: Configure the Frontend
 
-1. Copy the environment file:
-```bash
-cp .env.example .env.local
+1. Update `src/config/api.js` with your deployed API URL:
+```javascript
+return 'https://your-actual-api-url.vercel.app';
 ```
 
-2. Update `.env.local` with your deployed API URL:
-```
-VITE_VOICE_SERVER_API_URL=https://your-actual-api-url.vercel.app
-```
-
-3. Test locally:
+2. Test locally:
 ```bash
 npm install
 npm run dev
@@ -79,7 +64,7 @@ npm run dev
 
 ### Option A: Deploy to Vercel
 
-1. In the root directory (frontend):
+1. In the frontend root directory:
 ```bash
 vercel
 ```
@@ -114,39 +99,26 @@ npm install --save-dev gh-pages
 npm run deploy
 ```
 
-## Environment Variables
-
-### Frontend (.env.local)
-```
-VITE_VOICE_SERVER_API_URL=https://your-voice-api-url.com
-```
-
-### Backend (Vercel automatically sets)
-```
-PORT=3000
-NODE_ENV=production
-```
-
 ## Testing the Deployment
 
 1. Open your deployed frontend URL
 2. Test creating a call
 3. Test joining a call from another browser/device
-4. Check browser console for any connection errors
+4. Check browser console for connection status
 
 ## Troubleshooting
 
 ### Common Issues:
 
 1. **CORS Errors**: Make sure the voice server API has CORS enabled for your frontend domain
-2. **Socket Connection Failed**: Verify the API URL in your environment variables
+2. **Socket Connection Failed**: Verify the API URL in `src/config/api.js`
 3. **WebRTC Connection Issues**: Ensure STUN servers are accessible
 
 ### Debug Steps:
 
 1. Check the voice server API health endpoint: `https://your-api-url.com/health`
 2. Check browser console for errors
-3. Verify environment variables are loaded correctly
+3. Verify the API URL is configured correctly in `src/config/api.js`
 
 ## Production Considerations
 
