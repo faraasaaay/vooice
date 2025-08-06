@@ -281,7 +281,7 @@ class WebRTCService {
       // Optimize SDP for high-quality stereo audio
       sessionDescription.sdp = sessionDescription.sdp.replace(
         'useinbandfec=1', 
-        'useinbandfec=1; stereo=1; maxaveragebitrate=510000'
+        'useinbandfec=1; stereo=1; stereo=1; maxaveragebitrate=510000'
       );
       
       await this.rtcPeerConnection.setLocalDescription(sessionDescription);
